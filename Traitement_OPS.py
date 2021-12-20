@@ -76,9 +76,7 @@ width = 0.5
 BarName = temp.columns[17:33]
 x = np.arange(len(BarName))
 df = temp.iloc[Instant]
-y = df.to_numpy()
-y = y[0]
-y = y[17:33]
+y = df.to_numpy()[0][17:33]
 plt.bar(x, y, width, color=(0.65098041296005249,
                             0.80784314870834351,
                             0.89019608497619629, 1.0))

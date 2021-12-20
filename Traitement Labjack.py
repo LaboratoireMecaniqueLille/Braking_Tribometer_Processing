@@ -75,7 +75,7 @@ for i in np.arange(2, len(temp)):
         data = data.append(d, ignore_index=True)
     if temp[" Fnlj(N)"][i - 1] > 200 > temp[" Fnlj(N)"][i]:
         data.iloc[-1, 1] = temp["t(s)"][i]
-data['duree'] = data['fin']-data['debut']
+data['duree'] = data['fin'] - data['debut']
 
 data = data[data['duree'] > 1.0]
 data = data.reset_index()
@@ -96,14 +96,12 @@ correction = pd.DataFrame(columns=['fn_av', 'ft_av', 'fn_ap', 'ft_ap'])
 
 for i in range(len(data)):
 
-    df = pd.DataFrame()
     mask = (temp["t(s)"] > data['debut'][i] - 5) & \
         (temp["t(s)"] < data['debut'][i] - 1)
     df = temp[mask]
     ftmoy_av = df[' Ftlj(N)'].mean()
     fnmoy_av = df[' Fnlj(N)'].mean()
 
-    df = pd.DataFrame()
     mask = (temp["t(s)"] < data['fin'][i] + 5) & \
         (temp["t(s)"] > data['fin'][i] + 1)
     df = temp[mask]
@@ -121,18 +119,17 @@ for i in range(len(data)):
 
 for i in range(len(data)):
     plt.figure(7, figsize=(19.2, 10.8))
-    df = pd.DataFrame()
     mask = (temp["t(s)"] > data['debut'][i]) & (temp["t(s)"] < data['fin'][i])
     df = temp[mask]
     df = df.reset_index()
-    df["t(s)"] = df["t(s)"] - df["t(s)"][0]
+    df["t(s)"] -= df["t(s)"][0]
 
     a = (correction['fn_ap'][i] - correction['fn_av'][i]) / data['duree'][i]
     b = correction['fn_av'][i]
-    df[' Fnlj(N)'] = df[' Fnlj(N)'] - (a * df['t(s)'] + b)
+    df[' Fnlj(N)'] -= a * df['t(s)'] + b
     a = (correction['ft_ap'][i] - correction['ft_av'][i]) / data['duree'][i]
     b = correction['ft_av'][i]
-    df[' Ftlj(N)'] = df[' Ftlj(N)'] - (a * df['t(s)'] + b)
+    df[' Ftlj(N)'] -= a * df['t(s)'] + b
 
 # Calculation of friction coefficient for each brake
 
@@ -179,7 +176,7 @@ for i in range(len(data)):
         num = ''
         for k in column:
             if k != 'T':
-                num = num + k
+                num += k
         num_ = int(num)
         plt.plot(df["t(s)"], df_pad[column], Colors_Patin[num_], label=column)
         plt.grid()  
@@ -195,9 +192,8 @@ for i in range(len(data)):
     for column in df_disque.columns:
         num = ''
         for k in column:
-            if k != 'T' and k != 'd' and k != 'i' and k != 's' \
-                    and k != 'q' and k != 'u' and k != 'e':
-                num = num + k
+            if k not in 'Tdisque':
+                num += k
         num_ = int(num)
         plt.plot(df["t(s)"],
                  df_disque[column],

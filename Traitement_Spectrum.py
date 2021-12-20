@@ -51,14 +51,14 @@ b, a = butter(order, cutoff/nyquist, 'lowpass')
 # Capacitif
 plt.figure(figsize=(20, 10))
 CapB = DataChan['CapB(mm)']
-CapB = CapB-np.mean(CapB[200:1000])
+CapB -= np.mean(CapB[200:1000])
 plt.plot(MechTime, CapB, label='CapB(mm)')
 SigncontCapB = signal.filtfilt(b, a, CapB)
-CapB = CapB-SigncontCapB
+CapB -= SigncontCapB
 plt.plot(MechTime, CapB, label='CapB-continue')
 plt.plot(MechTime, SigncontCapB, label='SigncontCapB')
 plt.legend(loc='upper left', prop={'size': 10})
-plt.savefig(fich_h5+'_CAPB'+'.png',
+plt.savefig(fich_h5 + '_CAPB'+'.png',
             dpi=300,
             bbox_inches='tight',
             pad_inches=0.1)
@@ -66,15 +66,18 @@ plt.savefig(fich_h5+'_CAPB'+'.png',
 # Force normale
 plt.figure(figsize=(20, 10))
 Fn = DataChan['Fn(N)']
-Fn = Fn-np.mean(Fn[200:1000])
+Fn -= np.mean(Fn[200:1000])
 plt.plot(MechTime, Fn, label='Fn')
 # SigncontFCTRECH=ndi.filters.gaussian_filter1d(FCTRECH, GaussFiltSize)
 SigncontFn = signal.filtfilt(b, a, Fn)
-Fn = Fn-SigncontFn
+Fn -= SigncontFn
 plt.plot(MechTime, Fn, label='Fn-continue')
 plt.plot(MechTime, SigncontFn, label='SigncontFn')
 plt.legend(loc='upper left', prop={'size': 10})
-plt.savefig(fich_h5+'_Fn'+'.png', dpi=300, bbox_inches='tight', pad_inches=0.1)
+plt.savefig(fich_h5 + '_Fn'+'.png',
+            dpi=300,
+            bbox_inches='tight',
+            pad_inches=0.1)
 plt.clf()
 
 # Particules
@@ -82,7 +85,7 @@ plt.figure(figsize=(20, 10))
 CH1 = DataChan['CH1']
 plt.plot(MechTime, CH1, label='CH1')
 plt.legend(loc='upper left', prop={'size': 10})
-plt.savefig(fich_h5+'_CH1'+'.png',
+plt.savefig(fich_h5 + '_CH1'+'.png',
             dpi=300, bbox_inches='tight',
             pad_inches=0.1)
 plt.clf()
@@ -101,7 +104,10 @@ librosa.display.specshow(D,
 plt.colorbar(format='%+2.0f dB')
 # plt.setp(ay1.get_xticklabels(), visible=False)
 plt.title('Fn')
-plt.savefig(fich_h5+'_TF'+'.png', dpi=300, bbox_inches='tight', pad_inches=0.1)
+plt.savefig(fich_h5+'_TF' + '.png',
+            dpi=300,
+            bbox_inches='tight',
+            pad_inches=0.1)
 plt.clf()
 
 font = {'family': 'normal', 'weight': 'regular', 'size': 22}

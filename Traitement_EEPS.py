@@ -36,7 +36,7 @@ matplotlib.rc('font', **font)
 
 
 # Afficher la concentration totale
-fig = plt.figure(figsize=(12, 8))
+plt.figure(figsize=(12, 8))
 plt.plot(temp['Temps'], temp['Concentration totale'])
 plt.xlabel('Temps (s)')
 plt.ylabel('Concentration totale (#/cm$^{3}$)')
@@ -66,11 +66,8 @@ plt.figure(figsize=(30, 10))
 width = 0.5
 BarName = temp.columns[1:-3]
 x = np.arange(len(BarName))
-y = []
 df = temp.iloc[Instant]
-y = df.to_numpy()
-y = y[0]
-y = y[1:-3]
+y = df.to_numpy()[0][1:-3]
 plt.bar(x, y, width, color=(0.65098041296005249,
                             0.80784314870834351,
                             0.89019608497619629, 1.0))

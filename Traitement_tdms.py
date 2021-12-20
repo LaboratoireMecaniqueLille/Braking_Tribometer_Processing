@@ -32,7 +32,7 @@ for fich in os.listdir(directory):
         print(data)
         # Fréquence d'acquisition
         FREQ = 25000  # A modifier
-        Inc = 1/FREQ
+        Inc = 1 / FREQ
         
         # Select lines
 
@@ -44,14 +44,14 @@ for fich in os.listdir(directory):
 
         # Create time table
 
-        TIME = np.arange(0, len(data['Fn']))/FREQ
+        TIME = np.arange(0, len(data['Fn'])) / FREQ
         
         # Plot channels
 
         # Create lowpass filter to calculate the continuous value for each
         # TABL column
 
-        nyquist = FREQ/2
+        nyquist = FREQ / 2
         order = 3
         cutoff = 5
         b, a = butter(order, cutoff/nyquist, 'lowpass')
@@ -62,7 +62,7 @@ for fich in os.listdir(directory):
         
             val = data[column]
             val_cont = signal.filtfilt(b, a, val)
-            val_var = val-val_cont
+            val_var = val - val_cont
 
             # Plot TABL column data
         

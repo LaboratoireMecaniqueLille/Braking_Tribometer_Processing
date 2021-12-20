@@ -85,7 +85,7 @@ plt.savefig(directory+'Temperature.png')
 plt.show()
 
 # Afficher le coefficient de dilatation thermique en fonction de la température
-fig = plt.figure(figsize=(20, 14))
+plt.figure(figsize=(20, 14))
 plt.plot(df['Temperature'], df['Derive'])
 plt.plot(df['Temperature'], df['DeriveeCorrigee'], 'o')
 plt.xlabel('Temperature (°C)')

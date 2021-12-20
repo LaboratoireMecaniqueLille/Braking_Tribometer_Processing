@@ -34,17 +34,22 @@ lc = 0
 sz = 0
 mg = 0
 
+head_length = None
+mag = None
+Wyko_Nx = None
+Wyko_Ny = None
+wavelength = None
 for L in range(200):
 
     # "RAW DATA" is the string announcing the last line of header and the
     # start of profile data
-    if not (lines[L].split(separator)[0].find("RAW_DATA") == -1) and hl == 0:
-        head_length = L+1
+    if lines[L].split(separator)[0].find("RAW_DATA") != -1 and hl == 0:
+        head_length = L + 1
         hl = 1
 
     # raw height data has to be multiplied by wavelength of the measuring
     # light to obtain actual height
-    if not (lines[L].split(separator)[0].find("Wavelength") == -1) and wl == 0:
+    if lines[L].split(separator)[0].find("Wavelength") != -1 and wl == 0:
         wavelength = float(lines[L].split(separator)[3])
         wl = 1
 
@@ -58,13 +63,12 @@ for L in range(200):
         # lc = 1
 
     # read the size of the image in pixels, on X and Y
-    if not (lines[L].split(separator)[0].find("X Size") == -1) and sz == 0:
+    if lines[L].split(separator)[0].find("X Size") != -1 and sz == 0:
         Wyko_Nx = float(lines[L].split(separator)[1])
         Wyko_Ny = float(lines[L+1].split(separator)[1])
         sz = 1
         
-    if not (lines[L].split(separator)[0].find("Magnification") == -1) and \
-            mg == 0:
+    if lines[L].split(separator)[0].find("Magnification") != -1 and mg == 0:
         mag = float(lines[L].split(separator)[3])
         mg = 1
 
@@ -152,7 +156,7 @@ for i in range(length):
         # Xbad.append(Xp[i])
         # Ybad.append(Yp[i])
 
-    elif float(Zp[i])*wavelength/1000. + Zp_offset < -9 or \
+    elif float(Zp[i]) * wavelength / 1000. + Zp_offset < -9 or \
             float(Zp[i]) * wavelength / 1000. + Zp_offset > 8:
         Xbad.append(Xp[i])
         Ybad.append(Yp[i])
